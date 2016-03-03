@@ -1,5 +1,6 @@
 #Implement all parts of this assignment within (this) module2_assignment2.rb file
 
+
 #Implement a class called LineAnalyzer.
 class LineAnalyzer
   #Implement the following read-only attributes in the LineAnalyzer class. 
@@ -19,7 +20,8 @@ class LineAnalyzer
   #* call the calculate_word_frequency() method.
   def initialyze (content, line_number) 
     @content = content
-    @line_number = line_number   
+    @line_number = line_number  
+    #calculate_word_frequency() 
   end
 
   #Implement the calculate_word_frequency() method to:
@@ -33,12 +35,12 @@ class LineAnalyzer
     content.split.each do |palavra|
       word_frequence[palavra.downcase] += 1
     end
-    highest_wf_count = word_frequence.values.max
- 	highest_wf_words = word_frequence.select { |k, v| v == highest_wf_count }.keys
+    @highest_wf_count = word_frequence.values.max
+ 	@highest_wf_words = word_frequence.select { |k, v| v == highest_wf_count }.keys
 
-    p "linha= #{line_number}  #{highest_wf_count} Vez(es)  #{highest_wf_words}"
+    p "linha= #{line_number}  #{@highest_wf_count} Vez(es)  #{@highest_wf_words}"
   end  
-
+  
 end
 
 #  Implement a class called Solution. 
@@ -62,7 +64,7 @@ class Solution
   #* Read the 'test.txt' file in lines 
   #* Create an array of LineAnalyzers for each line in the file
   def analyze_file
-    analyzers = []
+    @analyzers = []
     lineAnalyzer = LineAnalyzer.new()
     cont = 0
     File.foreach("test.txt") do |line|    
@@ -70,9 +72,9 @@ class Solution
       lineAnalyzer.content = line.chomp
       lineAnalyzer.line_number = cont
       lineAnalyzer.calculate_word_frequency()
-      analyzers.push line.chomp
+      @analyzers.push lineAnalyzer.highest_wf_words, lineAnalyzer.highest_wf_count
     end
-    p analyzers
+    
   end
 
   # Implement the calculate_line_with_highest_frequency() method to:
@@ -81,7 +83,9 @@ class Solution
   #* identifies the LineAnalyzer objects in the analyzers array that have highest_wf_count equal to highest_count_across_lines 
   #  attribute value determined previously and stores them in highest_count_words_across_lines.
   def calculate_line_with_highest_frequency()
-  	#p @analyzers
+  	p analyzers
+
+  	
 
   end
   	
@@ -94,8 +98,7 @@ end
 
 obj1 = Solution.new
 obj1.analyze_file
-
 obj1.calculate_line_with_highest_frequency
-
+obj1.print_highest_word_frequency_across_lines
 
 
